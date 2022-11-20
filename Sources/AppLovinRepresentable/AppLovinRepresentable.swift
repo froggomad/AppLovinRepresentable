@@ -14,6 +14,7 @@ public struct AppLovinRepresentable {
         public func updateUIView(_ uiView: MANativeAdView, context: Context) { }
     }
 
+    @available (iOS 14, *)
     public struct MAADBannerView: UIViewRepresentable {
 
         public let backgroundColor: Color
@@ -54,12 +55,19 @@ public struct AppLovinRepresentable {
         public func didFail(toDisplay ad: MAAd, withError error: MAError) { }
     }
 
-    open class NativeAdViewDelegate: MANativeAdDelegate {
+    open class NativeAdViewDelegate: NSOjbect, MANativeAdDelegate {
+        // MARK: faux singleton
+        private static var isInitialized: Bool = false
+
+        public let adUnitID: String
         public static let shared = NativeAdViewDelegate()
 
-        private override init() {
+        init?(adUnitID: String) {
+            guard !Self.isInitialized else { return nil }
             super.init()
+            self.adUnitID = adUnitID
             nativeAdLoader.nativeAdDelegate = self
+            Self.isInitialized = true
         }
 
         // MARK: Native Ads
