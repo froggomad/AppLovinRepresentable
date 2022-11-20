@@ -55,7 +55,7 @@ public struct AppLovinRepresentable {
     }
 
     open class NativeAdViewDelegate: MANativeAdDelegate {
-        public let shared = NativeAdViewDelegate()
+        public static let shared = NativeAdViewDelegate()
 
         private override init() {
             super.init()
