@@ -72,24 +72,27 @@ public struct AppLovinRepresentable {
         public private(set) var nativeAdView: MANativeAdView = .init()
         public private(set) var nativeAd: MAAd?
         public private(set) static var adUnitID: String? = nil
-        public let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID ?? "")
+        public static var nativeAdLoader: MANativeAdLoader?  {
+            guard let adUnitID = adUnitID else { return nil }
+            return MANativeAdLoader(adUnitIdentifier: adUnitID)
+        }
 
         public init?(adUnitID: String) {
             guard !Self.isInitialized else { return nil }
             super.init()
             Self.adUnitID = adUnitID
-            nativeAdLoader.nativeAdDelegate = self
+            Self.nativeAdLoader?.nativeAdDelegate = self
             Self.isInitialized = true
         }
 
         public func createNativeAd() {
-            nativeAdLoader.loadAd()
+            Self.nativeAdLoader?.loadAd()
         }
 
         public func didLoadNativeAd(_ nativeAdView: MANativeAdView?, for ad: MAAd) {
             // Clean up any pre-existing native ad to prevent memory leaks
             if let currentNativeAd = nativeAd {
-                nativeAdLoader.destroy(currentNativeAd)
+                Self.nativeAdLoader?.destroy(currentNativeAd)
             }
 
             // Save ad for cleanup
