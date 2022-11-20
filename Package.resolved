@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AppLovinSDK",
+        "repositoryURL": "https://github.com/AppLovin/AppLovin-MAX-Swift-Package.git",
+        "state": {
+          "branch": "master",
+          "revision": "84c1243412129ce17700655f68c60afcd73a8928",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
