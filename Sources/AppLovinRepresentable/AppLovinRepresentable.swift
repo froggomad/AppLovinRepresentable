@@ -4,6 +4,7 @@ import SwiftUI
 
 public struct AppLovinRepresentable {
 
+    @available (iOS 14, *)
     public struct MAADNativeView: UIViewRepresentable {
         public let nativeAdView: MANativeAdView
 
