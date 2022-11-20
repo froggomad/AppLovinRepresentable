@@ -8,6 +8,10 @@ public struct AppLovinRepresentable {
     public struct MAADNativeView: UIViewRepresentable {
         public let nativeAdView: MANativeAdView
 
+        public init(nativeAdView: MANativeAdView) {
+            self.nativeAdView = nativeAdView
+        }
+
         public func makeUIView(context: Context) -> MANativeAdView {
             return nativeAdView
         }
@@ -20,6 +24,11 @@ public struct AppLovinRepresentable {
 
         public let backgroundColor: Color
         public let adUnitID: String
+
+        public init(backgroundColor: Color, adUnitID: String) {
+            self.backgroundColor = backgroundColor
+            self.adUnitID = adUnitID
+        }
 
         public func makeUIView(context: Context) -> MAAdView {
             let view = MAAdView(adUnitIdentifier: adUnitID)
