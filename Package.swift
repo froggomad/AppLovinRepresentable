@@ -12,14 +12,14 @@ let package = Package(
             targets: ["AppLovinRepresentable"]),
     ],
     dependencies: [
-        .package(name: "AppLovinSDK", url: "https://github.com/AppLovin/AppLovin-MAX-SDK-iOS", .branch("master"))
+        .package(url: "https://github.com/AppLovin/AppLovin-MAX-SDK-iOS", .branch("master"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "AppLovinRepresentable",
-            dependencies: []),
+            dependencies: ["AppLovinSDK"]),
         .testTarget(
             name: "AppLovinRepresentableTests",
             dependencies: ["AppLovinRepresentable"]),
