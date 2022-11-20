@@ -64,7 +64,7 @@ public struct AppLovinRepresentable {
         public private(set) static var adUnitID: String? = nil
         public let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID!)
 
-        init?(adUnitID: String) {
+        public init?(adUnitID: String) {
             guard !Self.isInitialized else { return nil }
             super.init()
             Self.adUnitID = adUnitID
