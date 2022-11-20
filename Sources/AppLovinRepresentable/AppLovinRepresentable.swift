@@ -54,24 +54,24 @@ public struct AppLovinRepresentable {
         open func didFail(toDisplay ad: MAAd, withError error: MAError) { }
     }
 
-    open class NativeAdViewDelegate: NSOjbect, MANativeAdDelegate {
+    open class NativeAdViewDelegate: NSObject, MANativeAdDelegate {
         // MARK: faux singleton
         private static var isInitialized: Bool = false
 
         // MARK: Native Ads
         public private(set) var nativeAdView: MANativeAdView = .init()
-        public private(set) let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID)
         public private(set) var nativeAd: MAAd?
-        public private(set) static let adUnitID: String
-        public private(set) static let shared = NativeAdViewDelegate(adUnitID: adUnitID)
+        public private(set) static var adUnitID: String? = nil
+        public let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID!)
+        public static let shared = NativeAdViewDelegate(adUnitID: adUnitID ?? "")
 
         init?(adUnitID: String) {
             guard !Self.isInitialized else { return nil }
+            super.init()
             Self.adUnitID = adUnitID
             nativeAdLoader.nativeAdDelegate = self
             Self.isInitialized = true
         }
-
 
         public func createNativeAd() {
             nativeAdLoader.loadAd()
