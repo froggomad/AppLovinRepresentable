@@ -32,48 +32,46 @@ public struct AppLovinRepresentable {
     }
     
     open class AppLovinViewDelegate: NSObject, MAAdViewAdDelegate {
-        public let adUnitID: String
 
         public static let shared = AppLovinViewDelegate()
         private override init() { super.init() }
 
         // MARK: Banner Ads
-        public func didExpand(_ ad: MAAd) { }
+        open func didExpand(_ ad: MAAd) { }
 
-        public func didCollapse(_ ad: MAAd) { }
+        open func didCollapse(_ ad: MAAd) { }
 
-        public func didLoad(_ ad: MAAd) { }
+        open func didLoad(_ ad: MAAd) { }
 
-        public func didFailToLoadAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) { }
+        open func didFailToLoadAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) { }
 
-        public func didDisplay(_ ad: MAAd) { }
+        open func didDisplay(_ ad: MAAd) { }
 
-        public func didHide(_ ad: MAAd) { }
+        open func didHide(_ ad: MAAd) { }
 
-        public func didClick(_ ad: MAAd) { }
+        open func didClick(_ ad: MAAd) { }
 
-        public func didFail(toDisplay ad: MAAd, withError error: MAError) { }
+        open func didFail(toDisplay ad: MAAd, withError error: MAError) { }
     }
 
     open class NativeAdViewDelegate: NSOjbect, MANativeAdDelegate {
         // MARK: faux singleton
         private static var isInitialized: Bool = false
 
-        public let adUnitID: String
-        public static let shared = NativeAdViewDelegate()
+        // MARK: Native Ads
+        public private(set) var nativeAdView: MANativeAdView = .init()
+        public private(set) let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID)
+        public private(set) var nativeAd: MAAd?
+        public private(set) static let adUnitID: String
+        public private(set) static let shared = NativeAdViewDelegate(adUnitID: adUnitID)
 
         init?(adUnitID: String) {
             guard !Self.isInitialized else { return nil }
-            super.init()
-            self.adUnitID = adUnitID
+            Self.adUnitID = adUnitID
             nativeAdLoader.nativeAdDelegate = self
             Self.isInitialized = true
         }
 
-        // MARK: Native Ads
-        public private(set) let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID)
-        public private(set) var nativeAd: MAAd?
-        public var nativeAdView: MANativeAdView = .init()
 
         public func createNativeAd() {
             nativeAdLoader.loadAd()
@@ -93,9 +91,9 @@ public struct AppLovinRepresentable {
             }
         }
 
-        public func didFailToLoadNativeAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) { }
+        open func didFailToLoadNativeAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) { }
 
-        public func didClickNativeAd(_ ad: MAAd) { }
+        open func didClickNativeAd(_ ad: MAAd) { }
 
         deinit {
             nativeAd = nil
