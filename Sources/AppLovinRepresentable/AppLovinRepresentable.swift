@@ -72,7 +72,7 @@ public struct AppLovinRepresentable {
         public private(set) var nativeAdView: MANativeAdView = .init()
         public private(set) var nativeAd: MAAd?
         public private(set) static var adUnitID: String? = nil
-        public let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID!)
+        public let nativeAdLoader: MANativeAdLoader = MANativeAdLoader(adUnitIdentifier: adUnitID ?? "")
 
         public init?(adUnitID: String) {
             guard !Self.isInitialized else { return nil }
