@@ -30,7 +30,7 @@ public struct AppLovinRepresentable {
         public func updateUIView(_ uiView: MAAdView, context: Context) { }
     }
     
-    public class AppLovinViewDelegate: NSObject, MAAdViewAdDelegate {
+    open class AppLovinViewDelegate: NSObject, MAAdViewAdDelegate {
         public let adUnitID: String
 
         public static let shared = AppLovinViewDelegate()
@@ -54,7 +54,7 @@ public struct AppLovinRepresentable {
         public func didFail(toDisplay ad: MAAd, withError error: MAError) { }
     }
 
-    public class NativeAdViewDelegate: MANativeAdDelegate {
+    open class NativeAdViewDelegate: MANativeAdDelegate {
         public let shared = NativeAdViewDelegate()
 
         private override init() {
