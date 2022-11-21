@@ -85,7 +85,7 @@ public struct AppLovinRepresentable {
             Self.isInitialized = true
         }
 
-        public func createNativeAd() {
+        open func createNativeAd() {
             Self.nativeAdLoader?.loadAd()
         }
 
