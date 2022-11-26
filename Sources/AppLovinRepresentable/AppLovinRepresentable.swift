@@ -5,26 +5,6 @@ import SwiftUI
 public struct AppLovinRepresentable {
 
     @available (iOS 14, *)
-    public struct MAADNativeView: UIViewRepresentable {
-        public let nativeAdView: MANativeAdView
-
-        public init(nativeAdView: MANativeAdView, geometry: GeometryProxy) {
-            let frame = CGRect(x: nativeAdView.frame.minX, y: nativeAdView.frame.minY, width: geometry.size.width, height: geometry.size.height)
-            let nativeAdView = nativeAdView
-            nativeAdView.frame = frame
-            self.nativeAdView = nativeAdView
-        }
-
-        public func makeUIView(context: Context) -> MANativeAdView {
-            return nativeAdView
-        }
-
-        public func updateUIView(_ uiView: MANativeAdView, context: Context) {
-            uiView.frame = nativeAdView.frame
-        }
-    }
-
-    @available (iOS 14, *)
     public struct MAADBannerView: UIViewRepresentable {
 
         public let backgroundColor: Color
@@ -67,53 +47,5 @@ public struct AppLovinRepresentable {
         open func didClick(_ ad: MAAd) { }
 
         open func didFail(toDisplay ad: MAAd, withError error: MAError) { }
-    }
-
-    open class NativeAdViewDelegate: NSObject, MANativeAdDelegate {
-        // MARK: faux singleton
-        private static var isInitialized: Bool = false
-
-        // MARK: Native Ads
-        public private(set) var nativeAdView: MANativeAdView = .init()
-        public private(set) var nativeAd: MAAd?
-        public private(set) static var adUnitID: String? = nil
-        public static var nativeAdLoader: MANativeAdLoader?  {
-            guard let adUnitID = adUnitID else { return nil }
-            return MANativeAdLoader(adUnitIdentifier: adUnitID)
-        }
-
-        public init?(adUnitID: String) {
-            guard !Self.isInitialized else { return nil }
-            super.init()
-            Self.adUnitID = adUnitID
-            Self.nativeAdLoader?.nativeAdDelegate = self
-            Self.isInitialized = true
-        }
-
-        open func createNativeAd() {
-            Self.nativeAdLoader?.loadAd()
-        }
-
-        public func didLoadNativeAd(_ nativeAdView: MANativeAdView?, for ad: MAAd) {
-            // Clean up any pre-existing native ad to prevent memory leaks
-            if let currentNativeAd = nativeAd {
-                Self.nativeAdLoader?.destroy(currentNativeAd)
-            }
-
-            // Save ad for cleanup
-            nativeAd = ad
-
-            if let nativeAdView = nativeAdView {
-                self.nativeAdView = nativeAdView
-            }
-        }
-
-        open func didFailToLoadNativeAd(forAdUnitIdentifier adUnitIdentifier: String, withError error: MAError) { }
-
-        open func didClickNativeAd(_ ad: MAAd) { }
-
-        deinit {
-            nativeAd = nil
-        }
     }
 }
