@@ -8,7 +8,10 @@ public struct AppLovinRepresentable {
     public struct MAADNativeView: UIViewRepresentable {
         public let nativeAdView: MANativeAdView
 
-        public init(nativeAdView: MANativeAdView) {
+        public init(nativeAdView: MANativeAdView, geometry: GeometryProxy) {
+            let frame = CGRect(x: nativeAdView.frame.minX, y: nativeAdView.frame.minY, width: geometry.size.width, height: geometry.size.height)
+            let nativeAdView = nativeAdView
+            nativeAdView.frame = frame
             self.nativeAdView = nativeAdView
         }
 
