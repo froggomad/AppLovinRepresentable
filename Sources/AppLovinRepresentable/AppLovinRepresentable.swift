@@ -19,7 +19,9 @@ public struct AppLovinRepresentable {
             return nativeAdView
         }
 
-        public func updateUIView(_ uiView: MANativeAdView, context: Context) { }
+        public func updateUIView(_ uiView: MANativeAdView, context: Context) {
+            uiView.frame = nativeAdView.frame
+        }
     }
 
     @available (iOS 14, *)
