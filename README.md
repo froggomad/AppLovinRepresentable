@@ -39,6 +39,6 @@ final class AppLovinViewDelegate: NSObject, MAAdViewAdDelegate {
     }
 
     func didFail(toDisplay ad: MAAd, withError error: MAError) {
-        React to the ad failing to load
+        // React to the ad failing to load
     }    
 ```
